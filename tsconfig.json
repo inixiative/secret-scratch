@@ -1,0 +1,7 @@
+{
+  "extends": "@inixiative/config/tsconfig/base.json",
+  "compilerOptions": {
+    "types": ["node", "bun"]
+  },
+  "exclude": ["dist", "demo"]
+}

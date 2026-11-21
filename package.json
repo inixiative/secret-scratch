@@ -1,0 +1,65 @@
+{
+  "name": "@inixiative/secret-scratch",
+  "version": "0.1.0",
+  "description": "Pass secrets to coding agents as $$value without the LLM, transcript, or logs ever seeing them. Drop-in ACP middleware proxy, stdio MCP server, and zero-dependency TypeScript library.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Aron Greenspan",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inixiative/secret-scratch.git"
+  },
+  "homepage": "https://github.com/inixiative/secret-scratch#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "secret-scratch": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "prepare": "if git rev-parse --git-dir >/dev/null 2>&1; then lefthook install; fi",
+    "build": "rm -rf dist && tsup",
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "check": "bun run typecheck && bun run lint && bun run test && bun run build",
+    "prepublishOnly": "bun run check"
+  },
+  "keywords": [
+    "acp",
+    "agent-client-protocol",
+    "mcp",
+    "secrets",
+    "coding-agents",
+    "claude-code",
+    "codex",
+    "zed",
+    "security",
+    "privacy"
+  ],
+  "packageManager": "bun@1.4.4",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.2",
+    "@inixiative/config": "^0.5.237",
+    "@types/bun": "1.4.4",
+    "@types/node": "^22.0.0",
+    "lefthook": "2.1.9",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3"
+  }
+}
