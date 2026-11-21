@@ -1,6 +1,6 @@
 # secret-scratch
 
-Pass secrets to coding agents as `$$value` without the LLM, transcript, or logs ever seeing them.
+Securely send secrets to your AI agent with `$$value` without the LLM, transcript, or logs ever seeing them.
 
 ![secret-scratch split-pane demo showing $$secret lifted to †m1.1 before inference, written via secret_scratch, piped via secret_pipe, and cat .env.local blocked](https://raw.githubusercontent.com/inixiative/secret-scratch/main/assets/demo.gif)
 
