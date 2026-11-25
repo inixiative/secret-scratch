@@ -1,5 +1,7 @@
 # secret-scratch
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/inixiative-secret-scratch-f4kp4y?v=1da258d6a541b305a1a317f3eeb380d3)](https://m8ven.ai/mcp/inixiative-secret-scratch-f4kp4y?s=readme)
+
 Securely send secrets to your AI agent with `$$value` without the LLM, transcript, or logs ever seeing them.
 
 ![secret-scratch split-pane demo showing $$secret lifted to †m1.1 before inference, written via secret_scratch, piped via secret_pipe, and cat .env.local blocked](https://raw.githubusercontent.com/inixiative/secret-scratch/main/assets/demo.gif)
