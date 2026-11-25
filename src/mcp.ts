@@ -56,6 +56,12 @@ export const SECRET_SCRATCH_TOOLS = [
       required: ['action'],
       additionalProperties: false,
     },
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: false,
+    },
   },
   {
     name: SECRET_PIPE_TOOL_NAME,
@@ -92,6 +98,12 @@ export const SECRET_SCRATCH_TOOLS = [
       },
       required: ['command'],
       additionalProperties: false,
+    },
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: false,
+      openWorldHint: true,
     },
   },
 ] as const;

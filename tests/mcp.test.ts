@@ -51,6 +51,18 @@ describe('MCP server handler', () => {
     expect(names).toEqual([SECRET_SCRATCH_TOOL_NAME, SECRET_PIPE_TOOL_NAME]);
   });
 
+  test('declares all four tool annotation hints as booleans on every tool', async () => {
+    const { handle } = setup();
+    const list = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/list' });
+    const tools = (list?.result as { tools: Array<{ annotations?: Record<string, unknown> }> })
+      .tools;
+    for (const tool of tools) {
+      for (const hint of ['readOnlyHint', 'destructiveHint', 'idempotentHint', 'openWorldHint']) {
+        expect(typeof tool.annotations?.[hint]).toBe('boolean');
+      }
+    }
+  });
+
   test('executes list, env, pipe, write, and consume without ever returning secret values', async () => {
     const { root, pad, handle } = setup();
     const secret = 'sk_live_never_show_this_987654';
