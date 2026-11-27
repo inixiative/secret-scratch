@@ -1,6 +1,6 @@
 {
   "name": "@inixiative/secret-scratch",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pass secrets to coding agents as $$value without the LLM, transcript, or logs ever seeing them. Drop-in ACP middleware proxy, stdio MCP server, and zero-dependency TypeScript library.",
   "type": "module",
   "license": "MIT",

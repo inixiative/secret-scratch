@@ -2,6 +2,11 @@ import { SECRET_REFERENCE_PATTERN } from './refs';
 
 export const SHAPED_SECRETS: ReadonlyArray<readonly [RegExp, string]> = [
   [/sk-ant-[A-Za-z0-9_-]{20,}/g, '[REDACTED:anthropic-key]'],
+  // why: a Fly token is two words (`FlyV1 <body>`), and `$$` on its own lifts only the first
+  [
+    /(?:FlyV1\s+)?(?:fm1[ar]|fm2|fo1)_[A-Za-z0-9+/=_-]{20,}(?:,(?:fm1[ar]|fm2|fo1)_[A-Za-z0-9+/=_-]{20,})*/g,
+    '[REDACTED:fly-token]',
+  ],
   [/sk-[A-Za-z0-9_-]{20,}/g, '[REDACTED:api-key]'],
   [/gh[pousr]_[A-Za-z0-9]{20,}/g, '[REDACTED:github-token]'],
   [/github_pat_[A-Za-z0-9_]{20,}/g, '[REDACTED:github-token]'],

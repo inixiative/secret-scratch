@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'bun:test';
+import { mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import {
   buildShapedLiftPatterns,
   contextSecretHits,
+  SecretScratchPad,
   SHAPED_SECRET_PATTERNS,
   scrubSecrets,
 } from '../src';
@@ -56,5 +60,32 @@ describe('shaped secret patterns', () => {
     expect(out.text).toContain('Bearer [REDACTED:credential]');
     expect(out.text).not.toContain('abc1234567890');
     expect(out.text).not.toContain('topsecrettoken12345');
+  });
+
+  const flyBody = `fm2_${'aB3+/_-='.repeat(5)},fm2_${'Zy9/+x'.repeat(6)}`;
+
+  test('takes a whole Fly token, scheme word and every comma-joined part', () => {
+    for (const token of [
+      `FlyV1 ${flyBody}`,
+      `FlyV1\n${flyBody}`,
+      flyBody,
+      `fo1_${'a1'.repeat(20)}`,
+    ]) {
+      const out = scrubSecrets(`use ${token} now`);
+      expect(out).toEqual({ text: 'use [REDACTED:fly-token] now', hits: 1 });
+    }
+    expect(scrubSecrets('FlyV1 tokens start with fm2_ and then a body').hits).toBe(0);
+  });
+
+  test('`$$` before a Fly token lifts both words as one secret', () => {
+    const root = mkdtempSync(join(tmpdir(), 'scratch-'));
+    const pad = new SecretScratchPad(join(root, 'pad'));
+    const out = pad.lift(
+      `token $$FlyV1 ${flyBody} ok`,
+      { thread: 't', message: 'm' },
+      { patterns: SHAPED_SECRET_PATTERNS },
+    );
+    rmSync(root, { recursive: true, force: true });
+    expect(out.text).toBe('token †m.1 ok');
   });
 });
